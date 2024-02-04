@@ -16,19 +16,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
-
 @Entity
 public class Curso {
 
-	
-	@Id	
+	@Id
 	private String nombre;
-	
-	@OneToMany(targetEntity=Plan.class,mappedBy="curso",cascade = CascadeType.ALL)
+
+	@OneToMany(targetEntity = Plan.class, mappedBy = "curso", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<Plan> planes = new ArrayList<Plan>();
 
-	
 	public String getNombre() {
 		return nombre;
 	}
@@ -47,11 +44,7 @@ public class Curso {
 
 	@Override
 	public String toString() {
-		return "Curso [nombre=" + nombre  + "]";
+		return "Curso [nombre=" + nombre + "]";
 	}
-	
-	
-	
-	
-	
+
 }

@@ -12,23 +12,17 @@ import jakarta.persistence.OneToOne;
 @Entity
 public class Tutor {
 
-	
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	private String nombre;
 	private String email;
-	
+
 	@OneToOne
-	@JoinColumn(name="plan")
+	@JoinColumn(name = "plan")
 	private Plan plan;
 
-	
-	
-	
-	
 	public long getId() {
 		return id;
 	}
@@ -66,9 +60,4 @@ public class Tutor {
 		return "Tutor [id=" + id + ", nombre=" + nombre + ", email=" + email + "]";
 	}
 
-
-	
-	
-	
-	
 }

@@ -26,30 +26,26 @@ import jakarta.persistence.OneToOne;
 public class Plan {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	private String nombre;
-	
-	
-	@OneToOne(targetEntity=Tutor.class,mappedBy="plan")
+
+	@OneToOne(targetEntity = Tutor.class, mappedBy = "plan")
 	private Tutor tutor;
-	
+
 	@ManyToOne(targetEntity = Curso.class)
-	@JoinColumn(name="FK_CURSO")
-	@JsonBackReference	
+	@JoinColumn(name = "FK_CURSO")
+	@JsonBackReference
 	private Curso curso;
-	
-	@OneToMany(mappedBy="plan")
+
+	@OneToMany(mappedBy = "plan")
 	private Set<Enmarca> enmarcados;
-	
+
 	@ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "Enmarca",
-            joinColumns = @JoinColumn(name = "plan_id"),
-            inverseJoinColumns = @JoinColumn(name = "actividad_id"))
-    private Set<Actividad> actividades = new HashSet<Actividad>();
-	
-	
+	@JoinTable(name = "Enmarca", joinColumns = @JoinColumn(name = "plan_id"), inverseJoinColumns = @JoinColumn(name = "actividad_id"))
+	private Set<Actividad> actividades = new HashSet<Actividad>();
+
 	public Set<Actividad> getActividades() {
 		return actividades;
 	}
@@ -94,14 +90,5 @@ public class Plan {
 	public String toString() {
 		return "Plan [id=" + id + ", nombre=" + nombre + ", tutor=" + tutor + ", curso=" + curso + "]";
 	}
-	
-	
 
-	
-	
-	
-	
-	
-	
-	
 }

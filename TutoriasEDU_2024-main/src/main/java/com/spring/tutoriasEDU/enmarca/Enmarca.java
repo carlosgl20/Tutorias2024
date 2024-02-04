@@ -15,19 +15,18 @@ import jakarta.persistence.OneToOne;
 @Entity
 public class Enmarca {
 
-	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
-	private String fecha;
-	
-	@ManyToOne 
-	@JoinColumn(name = "actividad_id") 
-	Actividad actividad; 
 
-	@ManyToOne 
-	@JoinColumn(name = "plan_id") 
+	private String fecha;
+
+	@ManyToOne
+	@JoinColumn(name = "actividad_id")
+	Actividad actividad;
+
+	@ManyToOne
+	@JoinColumn(name = "plan_id")
 	Plan plan;
 
 	public long getId() {
@@ -61,7 +60,5 @@ public class Enmarca {
 	public void setPlan(Plan plan) {
 		this.plan = plan;
 	}
-	
-	
-}
 
+}
