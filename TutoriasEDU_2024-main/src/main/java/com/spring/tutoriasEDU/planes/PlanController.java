@@ -16,139 +16,122 @@ import com.spring.tutoriasEDU.tutores.Tutor;
 import com.spring.tutoriasEDU.tutores.TutorDAO;
 
 @Controller
-public class PlanController {	
-	
-	
+public class PlanController {
+
 	@Autowired
 	PlanDao planDao;
-	
+
 	@Autowired
 	CursoDao cursoDao;
-	
+
 	@Autowired
 	TutorDAO tutorDao;
-	
+
 	@GetMapping("/plan")
 	public ModelAndView tutorias() {
 
 		ModelAndView model = new ModelAndView();
 		model.setViewName("planes");
-		
+
 		List<Plan> planes = (List<Plan>) planDao.findAll();
 		model.addObject("planes", planes);
-		
+
 		return model;
 	}
-	
 
-	
-	
-	
 	@GetMapping("/plan/{id}")
 	public ModelAndView tutoria(@PathVariable long id) {
-		
+
 		Plan plan = planDao.findById(id).get();
-		
+
 		ModelAndView model = new ModelAndView();
 		model.setViewName("plan");
 		model.addObject("plan", plan);
-		
+
 		return model;
-	}	
-	
-	
-	
-	
-	
+	}
+
 	@GetMapping("/plan/add")
 	public ModelAndView addPlan() {
-				
+
 		ModelAndView model = new ModelAndView();
 		model.setViewName("formPlan");
 		model.addObject("plan", new Plan());
 		model.addObject("tutores", tutorDao.getTutoresNoEnlazados());
 		model.addObject("cursos", cursoDao.findAll());
-		
+
 		return model;
-	}	
+	}
 
-	
-
-	
 	@GetMapping("/plan/edit/{id}")
 	public ModelAndView editPlan(@PathVariable long id) {
-				
+
 		ModelAndView model = new ModelAndView();
-		
+
 		Optional<Plan> planazo = planDao.findById(id);
-		if(planazo.isPresent()) {
-			
+		if (planazo.isPresent()) {
+
 			model.addObject("plan", planazo.get());
 			model.addObject("cursos", cursoDao.findAll());
 			model.addObject("tutores", tutorDao.getTutoresNoEnlazados());
 
 			model.setViewName("formPlan");
-		}
-		else model.setViewName("redirect:/plan");	
-		
+		} else
+			model.setViewName("redirect:/plan");
+
 		return model;
-	}	
-	
-	
-	
-	
-	
+	}
+
 	@GetMapping("/plan/del/{id}")
 	public ModelAndView delPlan(@PathVariable long id) {
-				
+
 		planDao.deleteById(id);
-		
+
 		ModelAndView model = new ModelAndView();
 		model.setViewName("redirect:/plan");
-		
+
 		return model;
-	}	
-	
-	
-	
-	
-	
+	}
+
 	@GetMapping("/plan/tutor/del/{idPlan}")
 	public ModelAndView eliminarTutoriaTutor(@PathVariable long idPlan) {
-		
+
 		Optional<Plan> plan = planDao.findById(idPlan);
-		if(plan.isPresent()) {
-			
+		if (plan.isPresent()) {
+
 			Plan planazo = plan.get();
 			Tutor tutor = planazo.getTutor();
 			planazo.setTutor(null);
 			tutor.setPlan(null);
 			planDao.save(planazo);
 		}
-		
+
 		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:/plan");		
-		
+		model.setViewName("redirect:/plan");
+
 		return model;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	@PostMapping("/plan/save")
 	public ModelAndView formTutoria(@ModelAttribute Plan plan) {
-	
+
 		Tutor tutor = plan.getTutor();
 		tutor.setPlan(plan);
 		planDao.save(plan);
-		
+
 		ModelAndView model = new ModelAndView();
-		model.setViewName("redirect:/plan");	
+		model.setViewName("redirect:/plan");
+
+		return model;
+	}
+
+	@GetMapping("plan/nuevo/{id}")
+	public ModelAndView planNuevo(@PathVariable long id) {
+		ModelAndView model = new ModelAndView();
+
+		model.setViewName("planes");
+		model.addObject("planNuevo", id);
 		
 		return model;
-	}	
-	
+	}
 }
